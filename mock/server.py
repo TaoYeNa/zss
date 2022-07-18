@@ -15,6 +15,8 @@ from flask import make_response
 
 app = Flask(__name__)
 
+
+
 ###  TODO:
 #RBAC routes for permissions
 #Permissions changed to array [7,7,7] to better represent all the different types of permissoins and add permission check function
@@ -22,7 +24,7 @@ app = Flask(__name__)
 global_username = "mock"
 global_password = "pass"
 global_password_expired = False
-
+global_port = ""
 global_datasets = [
     {
         "name":"MOCK.BRODCAST",
@@ -165,13 +167,14 @@ global_directory = {
 }
 @app.route('/login/', methods=['POST'])
 @app.route('/login', methods=['POST'])
+
 def login():
     if request.get_json()['username'] == global_username:
         if request.get_json()['password'] == global_password:
             if global_password_expired == False:
                 resp = make_response("Login Successful")
-                resp.set_cookie("jedHTTPSession", "xrQdqvc2J7WWlew2OXU1RtwwUXXD9KGJ35x5IZTrSrX18y80OVBI8A")
-                return resp
+                resp.set_cookie("jedHTTPSession." + global_port, "xrQdqvc2J7WWlew2OXU1RtwwUXXD9KGJ35x5IZTrSrX18y80OVBI8A")
+                return resp, 200
             else:
                 return "Password Expired", 428
     return "Incorrect Login Info", 400
