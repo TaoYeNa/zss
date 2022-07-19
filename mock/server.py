@@ -7,7 +7,7 @@
 #
 # Copyright Contributors to the Zowe Project.
 #
-
+import os
 from flask import Flask
 from flask import request
 import base64
@@ -24,7 +24,9 @@ app = Flask(__name__)
 global_username = "mock"
 global_password = "pass"
 global_password_expired = False
-global_port = ""
+#set port number that server uses,could be change to any number
+os.environ['FLASK_RUN_PORT'] = '5000' 
+global_port = os.getenv('FLASK_RUN_PORT')
 global_datasets = [
     {
         "name":"MOCK.BRODCAST",
