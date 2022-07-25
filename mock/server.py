@@ -12,7 +12,7 @@ from flask import Flask
 from flask import request
 import base64
 from flask import make_response
-
+import math
 app = Flask(__name__)
 
 
@@ -26,6 +26,10 @@ global_password = "pass"
 global_password_expired = False
 #set port number that server uses,could be change to any number
 os.environ['FLASK_RUN_PORT'] = '5000' 
+isHaMode = False;
+if('ZWE_HA_INSTANCES_COUNT' in os.environ):
+    if (not math.isnan(os.environ['ZWE_HA_INSTANCES_COUNT']) and os.environ['ZWE_HA_INSTANCES_COUNT']>1):
+        isHaMode=True
 global_port = os.getenv('FLASK_RUN_PORT')
 global_datasets = [
     {
@@ -169,14 +173,18 @@ global_directory = {
 }
 @app.route('/login/', methods=['POST'])
 @app.route('/login', methods=['POST'])
-
 def login():
+
     if request.get_json()['username'] == global_username:
         if request.get_json()['password'] == global_password:
             if global_password_expired == False:
                 resp = make_response("Login Successful")
-                resp.set_cookie("jedHTTPSession." + global_port, "xrQdqvc2J7WWlew2OXU1RtwwUXXD9KGJ35x5IZTrSrX18y80OVBI8A")
-                return resp, 200
+                if isHaMode is True:
+                    resp.set_cookie("jedHTTPSession.1" , "xrQdqvc2J7WWlew2OXU1RtwwUXXD9KGJ35x5IZTrSrX18y80OVBI8A")
+                    return resp, 200
+                else:
+                   resp.set_cookie("jedHTTPSession." + global_port, "xrQdqvc2J7WWlew2OXU1RtwwUXXD9KGJ35x5IZTrSrX18y80OVBI8A")
+                   return resp, 200
             else:
                 return "Password Expired", 428
     return "Incorrect Login Info", 400
