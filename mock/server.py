@@ -24,13 +24,21 @@ app = Flask(__name__)
 global_username = "mock"
 global_password = "pass"
 global_password_expired = False
-#set port number that server uses,could be change to any number
-os.environ['FLASK_RUN_PORT'] = '5000' 
+
+
+# check if its in high avaibility mode
 isHaMode = False;
 if('ZWE_HA_INSTANCES_COUNT' in os.environ):
     if (not math.isnan(os.environ['ZWE_HA_INSTANCES_COUNT']) and os.environ['ZWE_HA_INSTANCES_COUNT']>1):
         isHaMode=True
+
+# if theres no such env var declared, then we set to 5000 by default
+if(os.getenv('FLASK_RUN_PORT') == None):
+     os.environ['FLASK_RUN_PORT'] ='5000'
+
 global_port = os.getenv('FLASK_RUN_PORT')
+
+
 global_datasets = [
     {
         "name":"MOCK.BRODCAST",
@@ -549,5 +557,5 @@ def unixfile_copy(subpath):
         return {"msg": "File Successfully Copied"}
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(port=global_port,debug=True)
 
