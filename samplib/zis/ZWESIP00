@@ -57,8 +57,10 @@
 //*                                                                  */
 //********************************************************************/
 
+* ZWES.PLUGIN.ZISDYNAMIC=ZWESISDL
 * ZWES.PLUGIN.ECHO=ECHOPL01
 * ZWES.PLUGIN.MAGICNUMBER=MNUMBER
+
 
 ZWES.AUTH.CLASS=ZOWE
 

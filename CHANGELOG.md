@@ -2,7 +2,70 @@
 
 All notable changes to the ZSS package will be documented in this file.
 
-## Recent Changes
+## `2.18.1`
+- Bugfix: Support cross-memory server parameters longer than 128 characters (#684)
+- Enhancement: Expose new cross-memory server's functions in dynlink (#684)
+
+## `2.18.0`
+- Change log level for setting default value of 'httpRequestHeapMaxBlocks' to DEBUG instead of INFO.(#719)
+
+## `2.17.0`
+- Code to configure the SLH block size of the http server through 'httpRequestHeapMaxBlocks' in the yaml.(#701)
+
+## `2.16.0`
+- Bugfix: AUX should take leap seconds into account in their log messages' timestamp (#690, #691)
+
+## `2.14.0`
+- Bugfix: ZSS would not use zowe.cookieIdentifier when an HA config was used.
+
+## `2.13.0`
+- Enhancement: Added support for using "zowe.network" and "components.zss.zowe.network" to set listener IP and TLS version properties. (#659)
+- Enhancement: Added support for using "zowe.network" and "components.zss.zowe.network" to set cipher suites.
+- Enhancement: Change pattern matching for keyrings to allow more types of keyrings in the future (#581)
+- Enhancement: Consolidate JWK warnings into improved ZWES1606W message (#663)
+- Bugfix:  Corrected build environment file's use of IP address to github.com (#660)
+
+## `2.10.0`
+- This action making a CHANGELOG note via special syntax from the GitHub PR commit message, like it could automatically update CHANGELOG.md with the message. First job checks if PR body has changelog note or not if it's not there then it asked them to add it and second job is to check if changelog note has been added in changelog.md file or not. (#636)
+- Bugfix: Datasets with VOLSER set to an MVS Symbol would cause dataset read, write, and metadata API calls to fail for those datasets. (#603)
+- Bugfix:  Preventing error code 0C9-09 caused by a block size of zero (#606)
+
+## `2.9.0`
+- Bugfix: expose the version of the ZIS dynamic linkage base plugin so it can be updated during a build
+- Disable the ZIS dynamic linkage plugin as it's not needed by default
+
+## `2.8.0`
+
+- Feature: Added the API /datasetCopy to copy the datasets
+- Enhancement: /datasetMetadata now returns prime, secnd, and space fields for showing the primary and secondary extent sizes and the unit type for them. (#582)
+- Enhancement: ZSS dataset creation api now supports space values of "BYTE", "KB", and "MB" instead of just "CYL" and "TRK"
+- Bugfix: change conflicting message IDs in the ZIS dynamic linkage base plugin
+
+## `2.7.0`
+
+- Enhancement: A new ZIS plugin, "ZISDYNAMIC" is available within the LOADLIB as ZWESISDL. This plugin allows for ZIS plugins to access utility functions of the zowe-common-c libraries without needing to statically build them into the plugin itself.
+- Enhancement: New REST endpoint that maps distributed username to RACF user ID.
+- Bugfix: Fixed /unixfile/metadata not working when URL encoded spaces were present in file names
+
+## `2.5.0`
+
+- Bugfix: In 2.3 and 2.4, 'safkeyring://' syntax stopped working, only allowing 'safkeyring:////'. Now, support for both is restored.
+- Support ZIS runtime version check 
+- Update the dynamic linkage stub vector to include new functions
+- Add ZIS plugin development documentation and samples
+
+## `2.4.0`
+
+- Enhancement: ZSS /datasetContents now has a PUT API for creating datasets.
+- Enhancement: ZIS dynamic linkage support
+
+## `2.3.0`
+
+- Enhancment: ZSS now utilizes the configuration parameters present in the zowe configuration file via the configmgr, simplifying the startup of ZSS and increasing the validation of its parameters. The file zss/defaults.yaml shows the default configuration parameters of zss, in combination with the schema of the parameters within zss/schemas, though some parameters are derived from zowe-wide parameters or from other components when they involve those other components.
+- Enhancement: Improved startup time due to using the configmgr to process plugin registration, and only when the app-server is not enabled, as the app-server does the same thing.
+- Bugfix: Fixed an 0C4 error within the /unixfile API in 31 bit mode. This was preventing files from being shown in the editor.
+- Bugfix: 0C4 error messages from dataservices are now shown under the SEVERE log instead of the DEBUG log, so that issues can be spotted more easily.
+- Bugfix: 0C4 when lht hashmap functions were called with negative key
 
 ## `2.0.0`
 

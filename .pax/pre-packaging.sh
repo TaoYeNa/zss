@@ -19,6 +19,9 @@ SCRIPT_DIR=$(pwd)
 # build
 echo "$SCRIPT_NAME build zss ..."
 STEPLIB=CBC.SCCNCMP "$SCRIPT_DIR/content/build/build.sh"
+if [ $? != 0 ]; then
+  exit $?
+fi
 
 # clean up content folder
 echo "$SCRIPT_NAME cleaning up pax folder ..."
@@ -31,9 +34,12 @@ cd "$SCRIPT_DIR/content"
 mkdir LOADLIB SAMPLIB
 cp -X "//DEV.LOADLIB(ZWESIS01)" LOADLIB/ZWESIS01
 cp -X "//DEV.LOADLIB(ZWESAUX)" LOADLIB/ZWESAUX
+cp -X "//DEV.LOADLIB(ZWESISDL)" LOADLIB/ZWESISDL
 cp ../bak/samplib/zis/* SAMPLIB
 cp -r ../bak/bin .
 cp ../bak/manifest.yaml .
+cp ../bak/defaults.yaml .
 cp -r ../bak/schemas .
 cp ../bak/apiml-static-reg.yaml.template .
 extattr +p bin/zssServer
+extattr +p bin/zssServer64
